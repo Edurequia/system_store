@@ -10,9 +10,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "tb_products")
 public class Product {
 	
 	@Id
@@ -22,8 +27,14 @@ public class Product {
 	private Double price;
 	private String description;
 	
+	@ManyToOne
+	@JoinTable(name = "tb_product_category",
+    joinColumns = @JoinColumn(name = "product_id"),
+    inverseJoinColumns = @JoinColumn(name = "category_id"))
+	private Category categories;
+	
 	@JsonIgnore
-	@ManyToMany(mappedBy = "products")
+	@ManyToMany(mappedBy = "product")
 	private List<Order> orders = new ArrayList<>();
 	
 	public Product() {
@@ -66,6 +77,14 @@ public class Product {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public Category getCategories() {
+		return categories;
+	}
+	
+	public void setCategories(Category categories) {
+		this.categories = categories;
 	}
 	
 	public List<Order> getOrders() {

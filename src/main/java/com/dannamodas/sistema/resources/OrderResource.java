@@ -31,4 +31,9 @@ public class OrderResource {
 		return ResponseEntity.ok().body(list);
 	}
 	
+	/* @DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> deleteById(Long id) {
+		return service.deleteById(id);
+	} */
+	
 }

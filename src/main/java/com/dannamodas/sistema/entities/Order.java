@@ -14,8 +14,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 
-@Entity(name = "orders")
+@Entity
+@Table(name = "tb_orders")
 public class Order implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -26,16 +28,15 @@ public class Order implements Serializable{
 	private OrderStatus orderStatus;
 	
 	@ManyToMany
-	@JoinTable(name = "id_order_product")
-	private List<Product> products = new ArrayList<>();
+	@JoinTable(name = "tb_order_product")
+	private List<Product> product = new ArrayList<>();
 	
 	public Order() {
 	}
 
-	public Order(Long id, Date date, OrderStatus orderStatus, List<Product> products) {
+	public Order(Long id, Date date, OrderStatus orderStatus) {
 		this.date = date;
 		this.orderStatus = orderStatus;
-		this.products = products;
 	}
 
 	public Long getId() {
@@ -57,9 +58,9 @@ public class Order implements Serializable{
 	public void setOrderStatus(OrderStatus orderStatus) {
 		this.orderStatus = orderStatus;
 	}
-	
-	public List<Product> getProducts() {
-		return products;
+
+	public List<Product> getProduct() {
+		return product;
 	}
 
 	@Override
