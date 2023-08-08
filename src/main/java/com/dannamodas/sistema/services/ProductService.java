@@ -1,5 +1,6 @@
 package com.dannamodas.sistema.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,5 +18,14 @@ public class ProductService {
 	public Product findById(Long id) {
 		Optional<Product> obj = repository.findById(id);
 		return obj.get();
+	}
+	
+	public List<Product> findAll(){
+		List<Product> list = repository.findAll();
+		return list;
+	}
+	
+	public void deleteById(Long id) {
+		 repository.deleteById(id);
 	}
 }
