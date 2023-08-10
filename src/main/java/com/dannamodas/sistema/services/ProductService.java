@@ -28,4 +28,9 @@ public class ProductService {
 	public void deleteById(Long id) {
 		 repository.deleteById(id);
 	}
+	
+	public Product update(Product product) {
+		Product obj = repository.save(product);
+		return obj;
+	}
 }

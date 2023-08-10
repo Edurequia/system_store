@@ -28,4 +28,9 @@ public class OrderService {
 		repository.deleteById(id);
 	}
 	
+	public Order update(Order order) {
+		Order obj = repository.save(order);
+		return obj;
+	}
+	
 }

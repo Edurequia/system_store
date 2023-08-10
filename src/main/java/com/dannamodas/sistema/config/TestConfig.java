@@ -1,7 +1,7 @@
 package com.dannamodas.sistema.config;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,6 +19,8 @@ import com.dannamodas.sistema.repositories.ProductRepository;
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner{
+	
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	@Autowired
 	OrderRepository orderRepository;
@@ -58,9 +60,9 @@ public class TestConfig implements CommandLineRunner{
 		
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 		
-		Order o1 = new Order(null, new Date(), OrderStatus.PAID);
-		Order o2 = new Order(null, new Date(), OrderStatus.CANCELED);
-		Order o3 = new Order(null, new Date(), OrderStatus.WAITING_PAYMENT); 
+		Order o1 = new Order(null, sdf.parse("10/07/2023"), OrderStatus.PAID);
+		Order o2 = new Order(null, sdf.parse("10/06/2023"), OrderStatus.CANCELED);
+		Order o3 = new Order(null, sdf.parse("10/05/2023"), OrderStatus.WAITING_PAYMENT); 
 		
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3)); 
 		

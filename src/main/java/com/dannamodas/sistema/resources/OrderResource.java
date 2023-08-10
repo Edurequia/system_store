@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,6 +38,21 @@ public class OrderResource {
 	public ResponseEntity<Void> deleteById(@PathVariable Long id) {
 		service.deleteById(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Order> update(@RequestBody Order order, @PathVariable Long id){
+		Order existOrder = service.findById(id);
+		
+		if(existOrder != null) {
+			existOrder.setDate(order.getDate());
+			existOrder.setOrderStatus(order.getOrderStatus());
+			Order obj = service.update(existOrder);
+			return ResponseEntity.ok().body(obj);
+		}
+		else {
+			return null;
+		}
 	} 
 	
 }
