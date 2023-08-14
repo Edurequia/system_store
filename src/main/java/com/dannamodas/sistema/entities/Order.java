@@ -1,10 +1,10 @@
 package com.dannamodas.sistema.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import com.dannamodas.sistema.enums.OrderStatus;
 
@@ -12,8 +12,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,17 +28,21 @@ public class Order implements Serializable{
 	private Date date;
 	private OrderStatus orderStatus;
 	
-	@ManyToMany
-	@JoinTable(name = "tb_order_product")
-	private List<Product> product = new ArrayList<>();
+	@OneToMany(mappedBy = "id.order")
+	private Set<OrderItem> items = new HashSet<>();
+	
+	@ManyToOne
+	@JoinColumn(name = "client_id")
+	private User client;
 	
 	public Order() {
 	}
 
-	public Order(Long id, Date date, OrderStatus orderStatus) {
+	public Order(Long id, Date date, OrderStatus orderStatus, User client) {
 		this.id = id;
 		this.date = date;
 		this.orderStatus = orderStatus;
+		this.client = client;
 	}
 
 	public Long getId() {
@@ -64,8 +69,8 @@ public class Order implements Serializable{
 		this.orderStatus = orderStatus;
 	}
 
-	public List<Product> getProduct() {
-		return product;
+	public Set<OrderItem> getItems(){
+		return items;
 	}
 
 	@Override

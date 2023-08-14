@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +24,9 @@ public class Category implements Serializable{
 	
 	@OneToMany(mappedBy = "categories")
 	private List<Product> products = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "category")
+	private List<User> user = new ArrayList<>();
 	
 	public Category() {
 	}

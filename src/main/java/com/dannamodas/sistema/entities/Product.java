@@ -1,10 +1,6 @@
 package com.dannamodas.sistema.entities;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -33,9 +28,6 @@ public class Product {
     inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Category categories;
 	
-	@JsonIgnore
-	@ManyToMany(mappedBy = "product")
-	private List<Order> orders = new ArrayList<>();
 	
 	public Product() {
 	}
@@ -85,10 +77,6 @@ public class Product {
 	
 	public void setCategories(Category categories) {
 		this.categories = categories;
-	}
-	
-	public List<Order> getOrders() {
-		return orders;
 	}
 
 	@Override
