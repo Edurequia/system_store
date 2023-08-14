@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dannamodas.sistema.entities.Product;
+import com.dannamodas.sistema.exceptions.ResourceNotFoundException;
 import com.dannamodas.sistema.services.ProductService;
 
 @RestController
@@ -24,8 +25,12 @@ public class ProductResource {
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Product> findById(@PathVariable Long id){
+		try {
 		Product obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
+		} catch(ResourceNotFoundException e) {
+			throw new ResourceNotFoundException("Product not found with ID: " + id);
+		}
 	}
 	
 	@GetMapping
@@ -53,7 +58,7 @@ public class ProductResource {
 			return ResponseEntity.ok().body(obj);
 		}
 		else {
-			return null;
+			return ResponseEntity.notFound().build();
 		}
 		
 	}

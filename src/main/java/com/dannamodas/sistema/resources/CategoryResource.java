@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dannamodas.sistema.entities.Category;
+import com.dannamodas.sistema.exceptions.ResourceNotFoundException;
 import com.dannamodas.sistema.services.CategoryService;
 
 @RestController
@@ -22,8 +23,12 @@ public class CategoryResource {
 	
 	@GetMapping(value= "/{id}")
 	public ResponseEntity<Category> findById(@PathVariable Long id){
+		try {
 		Category obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
+		} catch(ResourceNotFoundException e) {
+			throw new ResourceNotFoundException("Category not found with ID: " + id);
+		}
 	}
 	
 	@GetMapping

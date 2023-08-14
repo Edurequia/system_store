@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dannamodas.sistema.entities.Order;
+import com.dannamodas.sistema.exceptions.ResourceNotFoundException;
 import com.dannamodas.sistema.services.OrderService;
 
 @RestController
@@ -24,8 +25,12 @@ public class OrderResource {
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Order> findById(@PathVariable Long id){
+		try {
 		Order obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
+		} catch (ResourceNotFoundException e) {
+			throw new ResourceNotFoundException("Order not found with ID: " + id);
+		}
 	}
 	
 	@GetMapping
@@ -51,7 +56,7 @@ public class OrderResource {
 			return ResponseEntity.ok().body(obj);
 		}
 		else {
-			return null;
+			return ResponseEntity.notFound().build();
 		}
 	} 
 	
